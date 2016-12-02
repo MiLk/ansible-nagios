@@ -18,33 +18,6 @@
     owner=nagios
     group=nagcmd
 
-- name: create certs directory
-  become: true
-  file: >
-    state=directory
-    path=/etc/apache2/ssl
-    owner=root
-    group=root
-    mode=770
-
-- name: copy nagios ssl certificate
-  become: true
-  copy: >
-    content="{{ nagios_ssl_pem }}"
-    dest=/etc/apache2/ssl/nagios.pem
-    owner=root
-    group=root
-    mode=640
-
-- name: copy nagios ssl key
-  become: true
-  copy: >
-    content="{{ nagios_ssl_key }}"
-    dest=/etc/apache2/ssl/nagios.key
-    owner=root
-    group=root
-    mode=640
-
 - name: copy nagios vhost
   become: true
   template: >
