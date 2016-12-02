@@ -1,13 +1,17 @@
 - name: download nagios tarball
   become: true
-  get_url: >
-    dest={{nagios_build_directory}}
-    url={{nagios_tarball}}
-    sha256sum={{nagios_tarball_sha256sum}}
+  get_url:
+    dest: '{{ nagios_build_directory }}'
+    url: '{{ nagios_tarball }}'
+    sha256sum: '{{ nagios_tarball_sha256sum }}'
 
 - name: untar the tarball
   become: true
-  command: "tar -xvf nagios-{{nagios_version}}.tar.gz chdir={{nagios_build_directory}}"
+  unarchive:
+    src: '{{ nagios_build_directory }}/nagios-{{ nagios_version }}.tar.gz'
+    dest: '{{ nagios_build_directory }}'
+    creates: '{{ nagios_build_directory }}/nagios-{{ nagios_version }}'
+    copy: no
 
 - name: create stylesheets directory
   become: true

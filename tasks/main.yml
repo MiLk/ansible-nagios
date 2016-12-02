@@ -7,7 +7,7 @@
 - name: install legacy packages
   become: true
   apt: pkg={{ item }} state=present force=true update_cache=yes
-  with_items: nagios_legacy_packages
+  with_items: "{{nagios_legacy_packages}}"
   when: legacy | default(false)
 
 # Create nagios users and groups.
@@ -40,29 +40,23 @@
     name=www-data
 
 # build and install nagios.
-- tasks:
-  include: build-nagios.yml
+- include: build-nagios.yml
 
 # Build and install nagios check plugins.
-- tasks:
-  include: build-plugins.yml
+- include: build-plugins.yml
 
 # Build and install nagios remote checks.
-- tasks:
-  include: build-nrpe.yml
+- include: build-nrpe.yml
 
 # Setup apache.
-- tasks:
-  include: apache.yml
+- include: apache.yml
 
 # Setup pagerduty.
-- tasks:
-  include: pagerduty.yml
+- include: pagerduty.yml
   when: nagios_enable_pagerduty_notifications
 
 # Setup SES for notifications.
-- tasks:
-  include: ses.yml
+- include: ses.yml
   when: nagios_enable_ses_notifications
 
 - name: disable flap detection

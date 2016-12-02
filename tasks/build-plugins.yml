@@ -7,7 +7,11 @@
 
 - name: untar the plugins tarball
   become: true
-  command: "tar -xvf nagios-plugins-{{nagios_plugins_version}}.tar.gz chdir={{nagios_build_directory}}"
+  unarchive:
+    src: '{{ nagios_build_directory }}/nagios-plugins-{{ nagios_plugins_version }}.tar.gz'
+    dest: '{{ nagios_build_directory }}'
+    creates: '{{ nagios_build_directory }}/nagios-plugins-{{ nagios_plugins_version }}'
+    copy: no
 
 - name: configure plugins
   become: true
