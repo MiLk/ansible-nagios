@@ -10,6 +10,7 @@ galaxy_info:
     versions:
     - precise
     - trusty
+    - xenial
   categories:
     - system
     - monitoring
